@@ -1,0 +1,14 @@
+services:
+  # 開発環境
+  dev:
+    hostname: dev # ホスト名の指定(ターミナル上でのホスト名を分かりやすくするため)
+    build:
+      context: .. # プロジェクトのルートディレクトリを指定
+      dockerfile: .devcontainer/Dockerfile # Dockerfileの指定
+    tty: true # コンテナを起動し続けるオプション
+    volumes:
+      - ..:/home/tcybar/workspace:cached # ローカルのワークスペースをコンテナのワークスペースにマウント(キャッシュで高速化)
+      - node_modules:/home/tcybar/workspace/node_modules # volumeのnode_modulesをコンテナのnode_modulesにマウント
+
+volumes:
+  node_modules:

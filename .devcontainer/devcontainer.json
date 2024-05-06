@@ -1,0 +1,35 @@
+{
+  "name": "battle-system-prototype", // 名前
+  "dockerComposeFile": "docker-compose.yaml", // .devcontainerディレクトリ内のdocker-compose.ymlを指定
+  "service": "dev", // 接続するコンテナサービス
+  "remoteUser": "tcybar", // 接続ユーザー
+  "workspaceFolder": "/home/tcybar/workspace", // 作業ディレクトリ
+  "features": {},
+  // コンテナが正常に開始されるたびに実行されるコマンド
+  // NOTE: コンテナ内でローカル環境のgit configファイルを適用するため。この記述がないと毎回configの設定が必要になる。
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+  // コンテナがはじめてユーザーに割り当てられたときに実行されるコマンド
+  // NOTE: node_modulesディレクトリの所有者をnodeユーザーに変更(変更しないとnpm installが権限エラーで失敗するため)
+  "postCreateCommand": "sudo chown tcybar:tcybar node_modules && npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Web開発関連
+        "dbaeumer.vscode-eslint", // ESLint                       : コードのエラーや警告を表示する
+        "esbenp.prettier-vscode", // Prettier                     : コードのフォーマットを整える
+        "bradlc.vscode-tailwindcss", // Tailwind CSS IntelliSense    : class名の自動補完、色の表示など
+        "formulahendry.auto-close-tag", // Auto Close Tag               : タグの自動閉じ
+        "formulahendry.auto-rename-tag", // Auto Rename Tag              : タグの自動リネーム
+        // 開発全般
+        "ms-azuretools.vscode-docker", // Docker                       : コンテナの起動、停止、ビルド、デプロイなど
+        "mhutchie.git-graph", // Git Graph                    : コミットログを綺麗に見れる
+        "pkief.material-icon-theme" // Material Icon Theme          : 各ファイルアイコンが表示される
+      ],
+      "settings": {
+        "eslint.useESLintClass": true, // eslint拡張機能を有効化するための設定
+        "editor.defaultFormatter": "esbenp.prettier-vscode", // デフォルトのフォーマッターをPrettierに設定
+        "editor.formatOnSave": true // 保存時にフォーマットするための設定
+      }
+    }
+  }
+}
